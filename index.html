@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brick Breaker Challenge</title>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-compat.js"></script>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{
+  background:linear-gradient(135deg,#6a11cb,#2575fc);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
+.container{display:flex;gap:20px;max-width:1100px;width:100%;padding:20px}
+.panel{
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(10px);
+  padding:25px;
+  border-radius:20px;
+  flex:1;
+}
+h1,h2{text-align:center;margin-bottom:15px}
+input,button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:30px;
+  margin-top:10px;
+}
+input{font-size:16px}
+button{
+  background:linear-gradient(to right,#ff9966,#ff5e62);
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+canvas{
+  background:#000;
+  display:none;
+  border-radius:10px;
+  margin:auto;
+}
+.game-info{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+.leaderboard ul{list-style:none}
+.leaderboard li{
+  background:rgba(255,255,255,.1);
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:8px;
+  display:flex;
+  justify-content:space-between;
+}
+.hidden{display:none}
+@media(max-width:768px){.container{flex-direction:column}}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- GAME PANEL -->
+  <div class="panel">
+    <h1>Brick Breaker</h1>
+
+    <div id="login">
+      <input id="playerName" placeholder="Enter your name">
+      <button id="startBtn">Start Game</button>
+    </div>
+
+    <canvas id="gameCanvas" width="480" height="320"></canvas>
+
+    <div class="game-info">
+      <div>Score: <span id="score">0</span></div>
+      <div>Lives: <span id="lives">3</span></div>
+    </div>
+
+    <p style="margin-top:10px;font-size:14px">
+      Use ← → arrow keys to move paddle
+    </p>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="panel leaderboard">
+    <h2>🏆 Top Players</h2>
+    <ul id="leaderboard"></ul>
+  </div>
+
+</div>
+
+<script>
+/* 🔥 Firebase Config */
+const firebaseConfig = {
+  apiKey: "AIzaSyDrBe_80BiB28FzGNUQ-hTHKqyLsFhKIRc",
+  authDomain: "educational-game-8d7d6.firebaseapp.com",
+  databaseURL: "https://educational-game-8d7d6-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "educational-game-8d7d6",
+  storageBucket: "educational-game-8d7d6.appspot.com",
+  messagingSenderId: "325505928552",
+  appId: "1:325505928552:web:c7c4bc103d520bb9f85add"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+const scoresRef = db.ref("scores");
+
+/* 🎮 Game Setup */
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+const livesEl = document.getElementById("lives");
+
+let score = 0, lives = 3, playing = false, player = "";
+
+/* Paddle */
+const paddle = { w:75, h:10, x:200 };
+
+/* Ball */
+const ball = { x:240, y:300, r:8, dx:2, dy:-2 };
+
+/* Bricks */
+const rows = 3, cols = 5;
+const bw = 75, bh = 20, pad = 10, topOff = 30_attach, leftOff = 30; /* intentional syntax error? */
+</script>
+</body>
+</html>
